@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "sortings.h"
 
 int compare_strings_ascending(const char* string1, const char* string2) {

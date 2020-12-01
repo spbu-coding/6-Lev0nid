@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#define min(a,b) \
-   ({ __typeof__ (a) _a = (a); \
-       __typeof__ (b) _b = (b); \
-     _a < _b ? _a : _b; })
+static size_t min(size_t a, size_t b) {
+    if(a < b) return a;
+    return b;
+}
 
 static void swap(char** a, char** b) {
     char* tmp;
@@ -79,7 +79,7 @@ static void merge_arrays(strings_array_t strings, strings_array_t buffer, size_t
     for(; middle + i2 < right; i2++)
         buffer[i1 + i2] = strings[middle + i2];
 
-    for(int i = 0; i < i1 + i2; i++)
+    for(size_t i = 0; i < i1 + i2; i++)
         strings[left + i] = buffer[i];
 }
 
