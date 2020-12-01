@@ -70,10 +70,6 @@ int read_strings_from_file(FILE* file, array_size_t amount_of_strings, strings_a
         fprintf(stderr, "Not enough strings in file");
         return -1;
     }
-    if(!feof(file)) {
-        fprintf(stderr, "Too many strings in file");
-        return -1;
-    }
     return 0;
 }
 
