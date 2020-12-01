@@ -65,7 +65,6 @@ int read_strings_from_file(FILE* file, array_size_t amount_of_strings, strings_a
             return -1;
         }
     }
-    strncat(strings[i-1], "\n", MAX_INPUT_STRING_SIZE - strlen((strings[i-1])));
     if(i < amount_of_strings) {
         fprintf(stderr, "Not enough strings in file");
         return -1;
