@@ -65,7 +65,7 @@ int read_strings_from_file(FILE* file, array_size_t amount_of_strings, strings_a
             return -1;
         }
     }
-    strncat(strings[i-1], "\n", 1);
+    strncat(strings[i-1], "\n", MAX_INPUT_STRING_SIZE - strlen((strings[i-1])));
     if(i < amount_of_strings) {
         fprintf(stderr, "Not enough strings in file");
         return -1;
@@ -80,7 +80,7 @@ int read_strings_from_file(FILE* file, array_size_t amount_of_strings, strings_a
 int put_strings_in_file(FILE* file, array_size_t amount_of_strings, strings_array_t strings) {
     for(size_t i = 0; i < amount_of_strings; i++) {
         if(fputs(strings[i], file) == EOF) {
-            fprintf(stderr, "Printing string #zu error", (i + 1));
+            fprintf(stderr, "Printing string #%zu error", (i + 1));
             return -1;
         }
     }
@@ -117,7 +117,7 @@ int main(int argc, char** argv) {
         strings[i] = (char*)malloc(sizeof(char)*(MAX_INPUT_STRING_SIZE + 1));
         if(strings[i] == NULL) {
             fprintf(stderr, "String #%zu of strings array memory allocation error\n", i + 1);
-            for(int j = 0; j < i; j++)
+            for(size_t j = 0; j < i; j++)
                 free(strings[j]);
             free(strings);
             return -1;
