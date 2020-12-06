@@ -14,7 +14,7 @@ int compare_strings_descending(const char* string1, const char* string2) {
 int parse_params(char** argv, array_size_t* amount_of_strings, comparator_func_t* cmp) {
     char* end_pointer;
     *amount_of_strings = strtoul(argv[1], &end_pointer, 10);
-    if(*end_pointer != '\0' || *amount_of_strings <= 0) {
+    if(*end_pointer != '\0' || *amount_of_strings < 0) {
         fprintf(stderr, "Second param is not a positive integer");
         return -1;
     }
@@ -40,6 +40,8 @@ int sort_strings(char** argv, array_size_t amount_of_strings, strings_array_t st
     static const char* word_insertion = "insertion";
     static const char* word_radix = "radix";
 
+    if(amount_of_strings == 0) return 0;
+
     if(strcmp(word_bubble, argv[4]) == 0) {
         bubble(strings, amount_of_strings, cmp);
     } else if(strcmp(word_merge, argv[4]) == 0) {
@@ -59,6 +61,7 @@ int sort_strings(char** argv, array_size_t amount_of_strings, strings_array_t st
 
 int read_strings_from_file(FILE* file, array_size_t amount_of_strings, strings_array_t strings) {
     size_t i;
+    if(amount_of_strings == 0) return 0;
     for(i = 0; i < amount_of_strings && !feof(file); i++){
         if(fgets(strings[i], MAX_INPUT_STRING_SIZE, file) == NULL) {
             fprintf(stderr, "Reading string #%zu error", i + 1);
@@ -73,6 +76,7 @@ int read_strings_from_file(FILE* file, array_size_t amount_of_strings, strings_a
 }
 
 int put_strings_in_file(FILE* file, array_size_t amount_of_strings, strings_array_t strings) {
+    if(amount_of_strings == 0) fputs("\n", file);
     for(size_t i = 0; i < amount_of_strings; i++) {
         if(fputs(strings[i], file) == EOF) {
             fprintf(stderr, "Printing string #%zu error", (i + 1));
