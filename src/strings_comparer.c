@@ -14,7 +14,7 @@ int compare_strings_descending(const char* string1, const char* string2) {
 int parse_params(char** argv, array_size_t* amount_of_strings, comparator_func_t* cmp) {
     char* end_pointer;
     *amount_of_strings = strtoul(argv[1], &end_pointer, 10);
-    if(*end_pointer != '\0' || *amount_of_strings < 0) {
+    if(*end_pointer != '\0') {
         fprintf(stderr, "Second param is not a positive integer");
         return -1;
     }
