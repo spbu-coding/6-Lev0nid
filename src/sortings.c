@@ -137,7 +137,6 @@ static void radix_sort_internal(strings_array_t strings, array_size_t amount_of_
     free(bucket);
 }
 
-
 void radix(strings_array_t string, array_size_t amount_of_strings, comparator_func_t cmp){
     radix_sort_internal(string, amount_of_strings, 0, amount_of_strings, 0);
     if(cmp("1", "2") < 0) {
