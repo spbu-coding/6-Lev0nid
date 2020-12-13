@@ -12,7 +12,7 @@ int compare_strings_descending(const char* string1, const char* string2) {
 }
 
 int parse_params(char** argv, array_size_t* amount_of_strings, comparator_func_t* cmp) {
-    char* end_pointer;
+    char* end_pointer = NULL;
     *amount_of_strings = strtoul(argv[1], &end_pointer, 10);
     if(*end_pointer != '\0') {
         fprintf(stderr, "Second param is not a positive integer");
@@ -40,17 +40,20 @@ int sort_strings(char** argv, array_size_t amount_of_strings, strings_array_t st
     static const char* word_insertion = "insertion";
     static const char* word_radix = "radix";
 
-    if(amount_of_strings == 0) return 0;
-
     if(strcmp(word_bubble, argv[4]) == 0) {
+        if(amount_of_strings == 0) return 0;
         bubble(strings, amount_of_strings, cmp);
     } else if(strcmp(word_merge, argv[4]) == 0) {
+        if(amount_of_strings == 0) return 0;
         merge(strings, amount_of_strings, cmp);
     } else if(strcmp(word_quick, argv[4]) == 0) {
+        if(amount_of_strings == 0) return 0;
         quick(strings, amount_of_strings, cmp);
     } else if(strcmp(word_insertion, argv[4]) == 0) {
+        if(amount_of_strings == 0) return 0;
         insertion(strings, amount_of_strings, cmp);
     } else if(strcmp(word_radix, argv[4]) == 0) {
+        if(amount_of_strings == 0) return 0;
         radix(strings, amount_of_strings, cmp);
     } else {
         fprintf(stderr, "Unsupported sorting algorithm");
@@ -76,7 +79,10 @@ int read_strings_from_file(FILE* file, array_size_t amount_of_strings, strings_a
 }
 
 int put_strings_in_file(FILE* file, array_size_t amount_of_strings, strings_array_t strings) {
-    if(amount_of_strings == 0) fputs("\n", file);
+    if(amount_of_strings == 0) {
+        fputs("\n", file);
+        return 0;
+    }
     for(size_t i = 0; i < amount_of_strings; i++) {
         if(fputs(strings[i], file) == EOF) {
             fprintf(stderr, "Printing string #%zu error", (i + 1));
@@ -133,6 +139,9 @@ int main(int argc, char** argv) {
     fclose(input_file);
 
     if(sort_strings(argv, amount_of_strings, strings, cmp) == -1) {
+        for(size_t i = 0; i < amount_of_strings; i++)
+            free(strings[i]);
+        free(strings);
         return -1;
     }
 
