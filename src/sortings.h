@@ -20,6 +20,4 @@ void merge(strings_array_t, array_size_t, comparator_func_t);
 
 void quick(strings_array_t, array_size_t, comparator_func_t);
 
-
 void radix(strings_array_t, array_size_t, comparator_func_t);
-
